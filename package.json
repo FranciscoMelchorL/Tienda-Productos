@@ -1,6 +1,6 @@
 {
   "name": "tienda-productos",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "main": "index.js",
   "scripts": {
     "start": "expo start",
@@ -22,6 +22,8 @@
     "react-native-paper": "^5.14.5",
     "react-native-safe-area-context": "^5.4.1",
     "react-redux": "^9.2.0",
+    "redux": "^5.0.1",
+    "redux-persist": "^6.0.0",
     "uuid": "8.3.2"
   },
   "devDependencies": {

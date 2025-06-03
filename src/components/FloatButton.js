@@ -69,9 +69,9 @@ export const FloatButton = ({ tema, onAgregar }) => {
 
         await onAgregar(nuevo);
 
-        const nuevosProductos = [...productos, nuevo];
-        dispatch(setProductos(nuevosProductos));
-        guardarProductos(nuevosProductos);
+        // const nuevosProductos = [...productos, nuevo];
+        // dispatch(setProductos(nuevosProductos));
+        // guardarProductos(nuevosProductos);
 
         setNombre('');
         setDescripcion('');

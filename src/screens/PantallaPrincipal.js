@@ -14,22 +14,26 @@ import { Ionicons } from '@expo/vector-icons';
 import { ConfirmDialog } from '../components/ConfirmDialog';
 import { EditProductModal } from '../components/EditProducto';
 import { obtenerProductosFirebase, guardarProductosLocal, cargarProductosLocal, agregarProductoFirebase, editarProductoFirebase, eliminarProductoFirebase} from '../utils/productosService';
+import { LoadingOverlay } from '../components/LoadingOverlay';
 
 export default function PantallaPrincipal() {
 
     const dispatch = useDispatch();
     const productos = useSelector(state => state.productos.lista);
+    const [cargando, setCargando] = useState(true);
 
     useEffect(() => {
         const cargar = async () => {
+            setCargando(true);
             try {
                 const productosRemotos = await obtenerProductosFirebase();
                 dispatch(setProductos(productosRemotos));
-                guardarProductosLocal(productosRemotos);
+                // guardarProductosLocal(productosRemotos);
             } catch (e) {
-                const productosLocales = await cargarProductosLocal();
-                dispatch(setProductos(productosLocales));
+                // const productosLocales = await cargarProductosLocal();
+                // dispatch(setProductos(productosLocales));
             }
+            setCargando(false);
         };
         cargar();
     }, []);
@@ -50,7 +54,7 @@ export default function PantallaPrincipal() {
         const productoConId = await agregarProductoFirebase(nuevoProducto);
         const nuevos = [...productos, productoConId];
         dispatch(setProductos(nuevos));
-        guardarProductosLocal(nuevos);
+        // guardarProductosLocal(nuevos);
     };
 
     const editarProducto = async (productoEditado) => {
@@ -59,14 +63,14 @@ export default function PantallaPrincipal() {
             p.id === productoEditado.id ? productoEditado : p
         );
         dispatch(setProductos(nuevos));
-        guardarProductosLocal(nuevos);
+        // guardarProductosLocal(nuevos);
     };
 
     const borrarProducto = async (id) => {
         await eliminarProductoFirebase(id);
         const nuevos = productos.filter(p => p.id !== id);
         dispatch(setProductos(nuevos));
-        guardarProductosLocal(nuevos);
+        // guardarProductosLocal(nuevos);
     };
 
     const [productoAEliminar, setProductoAEliminar] = useState(null);
@@ -125,6 +129,10 @@ export default function PantallaPrincipal() {
             </TouchableOpacity>
         </View>
     );
+
+    if (cargando) {
+        return <LoadingOverlay visible={true} mensaje="Cargando productos..." tema={tema} />;
+    }
 
     return (
         <SafeAreaView style={[styles.contenedor, { backgroundColor: tema.fondo }]}>
