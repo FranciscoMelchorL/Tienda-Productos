@@ -2,9 +2,7 @@ import * as ImagePicker from 'expo-image-picker';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from 'uuid';
 import { Modal, TextInput, Button } from 'react-native-paper';
-import { guardarProductos } from '../utils/storage';
 import { useDispatch, useSelector } from 'react-redux';
-import { setProductos } from '../store/productosSlice';
 import { Alert, Image } from 'react-native';
 import { useState } from 'react';
 import { fileUpload } from '../utils/fileUpload';
@@ -82,7 +80,7 @@ export const FloatButton = ({ tema, onAgregar }) => {
 
     return (
         <>
-            <Button icon="plus" mode="contained" onPress={() => setModalVisible(true)} style={{ position: 'absolute', bottom: 20, right: 20, zIndex: 10 }}>
+            <Button icon="plus" mode="contained" onPress={() => setModalVisible(true)} style={{ position: 'absolute', bottom: 75, right: 20, zIndex: 10 }}>
                 Agregar
             </Button>
 
