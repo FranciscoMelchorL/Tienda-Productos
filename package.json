@@ -1,6 +1,6 @@
 {
   "name": "tienda-productos",
-  "version": "1.0.2",
+  "version": "1.2.0",
   "main": "index.js",
   "scripts": {
     "start": "expo start",
@@ -17,6 +17,8 @@
     "expo": "^54.0.7",
     "expo-asset": "^12.0.8",
     "expo-image-picker": "~17.0.8",
+    "expo-media-library": "^18.2.0",
+    "expo-print": "^15.0.7",
     "expo-status-bar": "~3.0.8",
     "firebase": "^11.8.1",
     "react": "^19.1.0",
