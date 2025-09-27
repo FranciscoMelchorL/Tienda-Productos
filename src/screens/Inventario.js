@@ -3,7 +3,6 @@ import { View, TextInput, FlatList, Text, Image, StyleSheet } from 'react-native
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from 'react-native';
-import { colores } from '../theme/theme';
 import { useDispatch, useSelector } from 'react-redux';
 import { setProductos } from '../store/productosSlice';
 import { AgregarProducto } from '../components/AgregarProducto';

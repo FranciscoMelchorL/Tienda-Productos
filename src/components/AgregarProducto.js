@@ -9,6 +9,7 @@ import { LoadingOverlay } from './LoadingOverlay';
 
 export function AgregarProducto({ tema, onAgregar }) {
     const [modalVisible, setModalVisible] = useState(false);
+    const [codigoBarras, setCodigoBarras] = useState('');
     const [nombre, setNombre] = useState('');
     const [descripcion, setDescripcion] = useState('');
     const [precio, setPrecio] = useState('');
@@ -48,16 +49,19 @@ export function AgregarProducto({ tema, onAgregar }) {
             return;
         }
         const nuevo = {
+            id: codigoBarras ? codigoBarras : uuidv4(),
             nombre,
             descripcion,
             precio: parseFloat(precio),
             imagenUrl: cloudinaryUrl,
+            codigoBarras: codigoBarras || '',
         };
         await onAgregar(nuevo);
         setNombre('');
         setDescripcion('');
         setPrecio('');
         setImagenUrl(null);
+        setCodigoBarras('');
         setModalVisible(false);
     };
 
@@ -80,6 +84,13 @@ export function AgregarProducto({ tema, onAgregar }) {
                             placeholder="Nombre"
                             value={nombre}
                             onChangeText={setNombre}
+                            style={{ marginBottom: 10, backgroundColor: tema.input, borderColor: tema.borde, borderWidth: 1, color: tema.texto, width: '100%', padding: 8, borderRadius: 8 }}
+                            placeholderTextColor={tema.textoSecundario}
+                        />
+                        <TextInput
+                            placeholder="Código de barras (opcional)"
+                            value={codigoBarras}
+                            onChangeText={setCodigoBarras}
                             style={{ marginBottom: 10, backgroundColor: tema.input, borderColor: tema.borde, borderWidth: 1, color: tema.texto, width: '100%', padding: 8, borderRadius: 8 }}
                             placeholderTextColor={tema.textoSecundario}
                         />

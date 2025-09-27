@@ -1,6 +1,6 @@
 {
   "name": "tienda-productos",
-  "version": "1.2.0",
+  "version": "1.3.3",
   "main": "index.js",
   "scripts": {
     "start": "expo start",
@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "expo": "^54.0.7",
     "expo-asset": "^12.0.8",
+    "expo-file-system": "~19.0.15",
     "expo-image-picker": "~17.0.8",
     "expo-media-library": "^18.2.0",
     "expo-print": "^15.0.7",

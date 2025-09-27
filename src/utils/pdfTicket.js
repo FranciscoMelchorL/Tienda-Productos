@@ -1,5 +1,6 @@
 import * as Print from 'expo-print';
 import * as MediaLibrary from 'expo-media-library';
+import * as FileSystem from 'expo-file-system';
 
 export async function generarPDFVenta({ productos, total, fecha, nombreArchivo }) {
   // Construir HTML para el ticket
@@ -47,10 +48,24 @@ export async function generarPDFVenta({ productos, total, fecha, nombreArchivo }
   const { status } = await MediaLibrary.requestPermissionsAsync();
   if (status !== 'granted') throw new Error('Permiso de almacenamiento denegado');
 
-  const asset = await MediaLibrary.createAssetAsync(uri);
-  await MediaLibrary.createAlbumAsync('Tickets', asset, false);
+  // Usar la nueva API de FileSystem para mover el archivo
+  const fileName = `${nombreArchivo}.pdf`;
+  const documentsDir = await FileSystem.getDocumentDirectoryAsync();
+  const destPath = `${documentsDir.uri}${fileName}`;
 
-  // Renombrar archivo
-  // Expo no permite renombrar directamente, pero el nombre se puede usar para registro
+  // Leer el archivo PDF generado
+  const pdfData = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 });
+
+  // Escribir el archivo en la carpeta Documents
+  await FileSystem.writeAsStringAsync(destPath, pdfData, { encoding: FileSystem.EncodingType.Base64 });
+
+  // Registrar el archivo en MediaLibrary para que sea visible en la galería
+  const asset = await MediaLibrary.createAssetAsync(destPath);
+  const album = await MediaLibrary.getAlbumAsync('Documents');
+  if (album) {
+    await MediaLibrary.addAssetsToAlbumAsync([asset], album, false);
+  } else {
+    await MediaLibrary.createAlbumAsync('Documents', asset, false);
+  }
   return asset;
 }
